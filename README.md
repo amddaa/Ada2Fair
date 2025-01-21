@@ -75,6 +75,17 @@ As for general parameters of all methods, we tune the learning rate in [1e-4,5e-
 
 For Ada2Fair, the hidden size $d_1$ of $\mathcal{G}$ is set to 32 and the hidden dimension $d_2, d_3$ of $\mathcal{A}$ are fixed to 16. As for the training steps of two phases, $s_1$ is set to 10 and $s_2$ equals 1. In addition, we tune the $\alpha$ parameter ranging in [0, 1] to strike a balance between the two-sided fairness. For baselines, we carefully search the hyper-parameters following the settings of original authors. The implementation will be released after the anonymous stage.
 
+
+## 📝 Results
+
+We provide data points for drawing Pareto curves, and model checkpoints of the original model and Ada2Fair with BPR and LightGCN backbones on the Book-Crossing dataset as follows:
+- Pareto curves with six sheets ([[Pareto-curve.xlsx]](ckpt/Pareto-curve.xlsx))
+- Original model checkpoint with BPR ([[Book-Crossing-BPR-original]](ckpt/Book-Crossing-BPR-original-NDCG0.0415-PFair4.3147-CFair0.1488.pth))
+- Ada2Fair model checkpoint with BPR ([[Book-Crossing-BPR-Ada2Fair]](ckpt/Book-Crossing-BPR-Ada2Fair-NDCG0.0387-PFair1.0845-CFair0.141.pth))
+- Original model checkpoint with LightGCN ([[Book-Crossing-LightGCN-original]](ckpt/Book-Crossing-LightGCN-original-NDCG0.0529-PFair4.704-CFair0.1636.pth))
+- Ada2Fair model checkpoint with LightGCN ([[Book-Crossing-LightGCN-Ada2Fair]](ckpt/Book-Crossing-LightGCN-Ada2Fair-NDCG0.0509-PFair2.0842-CFair0.1559.pth))
+
+
 ## 🌟 Acknowledgement
 
 Please cite the following paper if you find our code helpful.
