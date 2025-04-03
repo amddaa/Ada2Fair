@@ -1,3 +1,6 @@
+# Datasets
+/dataset*
+
 # Saved models
 /log*
 /saved*
