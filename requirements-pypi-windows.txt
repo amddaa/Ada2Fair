@@ -2,3 +2,7 @@ torch==1.11.0
 cuda-python
 recbole==1.2.0
 numpy<2
+
+kmeans-pytorch
+lightgbm
+xgboost

@@ -43,6 +43,9 @@ def run_model(model_name, dataset_name, fairness_type):
     # model loading and initialization
     init_seed(config["seed"] + config["local_rank"], config["reproducibility"])
     model = model_class(config, train_data._dataset).to(config["device"])
+    import torch
+    checkpoint = torch.load("ckpt/Book-Crossing-BPR-Ada2Fair-NDCG0.0387-PFair1.0845-CFair0.141.pth", map_location=torch.device('cpu'))
+    model.load_state_dict(checkpoint["state_dict"])
     logger.info(model)
 
     # trainer loading and initialization
@@ -55,7 +58,7 @@ def run_model(model_name, dataset_name, fairness_type):
 
     # model evaluation
     test_result = trainer.evaluate(
-        test_data, load_best_model=True, show_progress=config["show_progress"]
+        test_data, load_best_model=False, show_progress=config["show_progress"]
     )
 
     logger.info(set_color("best valid ", "yellow") + f": {best_valid_result}")

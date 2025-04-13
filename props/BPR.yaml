@@ -4,6 +4,6 @@ encoder_layers: [32]
 encoder_activations: ["tanh", "sigmoid"]
 decoder_layers_pfair: [16]
 decoder_activations_pfair: ["tanh"]
-decoder_layers_ufair: [16]
+decoder_layers_ufair: [8]
 decoder_activations_ufair: ["tanh"]
 alpha: 0.3
