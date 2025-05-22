@@ -30,6 +30,7 @@ class BPR(GeneralRecommender):
         # load parameters info
         self.embedding_size = config["embedding_size"]
         self.fairness_type = config["fairness_type"]
+        self.lambda_param = config["lambda"]
         self.fairness_weight = None
 
         if self.fairness_type is not None:
@@ -171,6 +172,7 @@ class BPR(GeneralRecommender):
                 dim=1
             ), torch.mul(user_e, neg_e).sum(dim=1)
             ipw = (self.fairness_weight[user, pos_item]).to(self.device)
+            ipw = ipw ** self.lambda_param
             loss = self.loss(pos_item_score, neg_item_score, ipw)
             return loss
         else:

@@ -804,3 +804,39 @@ class P_Fair(AbstractMetric):
         return np.std(provider_exposure_score[1:]) / np.mean(
             provider_exposure_score[1:]
         )
+
+class Novelty(AbstractMetric):
+    # Novelty@K - average novelty of the top-K items
+    metric_type = EvaluatorType.RANKING
+    metric_need = ["rec.items", "data.count_items"] # items = user x k, count_items = item_id : count
+
+    def __init__(self, config):
+        super().__init__(config)
+        self.topk = config["topk"] # chosen K
+
+    def used_info(self, dataobject):
+        item_matrix = dataobject.get("rec.items")
+        item_count = dataobject.get("data.count_items")
+        return item_matrix.numpy(), dict(item_count)
+
+    def calculate_metric(self, dataobject):
+        item_matrix, item_count = self.used_info(dataobject)
+        total_interactions = sum(item_count.values()) # all interactions
+        novelty_matrix = np.zeros_like(item_matrix, dtype=np.float) # novelty matrix
+        for i in range(item_matrix.shape[0]):
+            for j in range(item_matrix.shape[1]):
+                item = item_matrix[i, j]
+                prob = item_count.get(item, 1) / total_interactions # item interactions / all interactions
+                novelty_matrix[i, j] = -np.log2(prob) # novelty score - the lower the prob, the higher the novelty
+        metric_dict = self.topk_result("novelty", novelty_matrix)
+
+        print("Novelty metric calculated! ", metric_dict)
+        return metric_dict
+
+    def topk_result(self, metric, value):
+        metric_dict = {}
+        avg_result = value.mean(axis=0)
+        for k in self.topk:
+            key = "{}@{}".format(metric, k)
+            metric_dict[key] = round(avg_result[k - 1], self.decimal_place)
+        return metric_dict

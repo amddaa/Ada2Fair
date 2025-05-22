@@ -10,7 +10,7 @@ NEG_PREFIX: neg_
 LABEL_FIELD: label
 drop_filter_field: True
 
-metrics: ["Recall", "NDCG", "Hit", "P_Fair"]
+metrics: ["Recall", "NDCG", "Hit", "P_Fair", "Novelty"]
 topk: [20]
 train_batch_size: 4096
 eval_batch_size: 40960000
@@ -18,6 +18,8 @@ valid_metric: NDCG@20
 epochs: 1000
 stopping_step: 20
 learning_rate: 1e-3
+
+lambda: 1.0 # A higher λ (e.g., closer to 1) emphasizes fairness (reweighting is amplified). A lower λ (e.g., closer to 0) reduces fairness weighting, prioritizing accuracy.
 
 # fairness_type: ada2fair
 provider_eta: 2

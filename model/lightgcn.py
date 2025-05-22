@@ -246,6 +246,7 @@ class LightGCN(GeneralRecommender):
 
             # weighted preference learning
             ipw = (self.fairness_weight[user, pos_item]).to(self.device)
+            # TODO missing labmda? ipw = ipw ** self.lambda_param
             mf_loss = self.mf_loss(pos_scores, neg_scores, ipw)
 
             # calculate BPR Loss
